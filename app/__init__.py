@@ -11,7 +11,7 @@ def createApp():
     github_blueprint=make_github_blueprint(
         client_id=os.getenv("CLIENT_ID"),
         client_secret=os.getenv("CLIENT_SECRET_KEY"),
-        redirect_to="github_login"
+        redirect_to="github.login"
     )
     app.register_blueprint(route)
     app.register_blueprint(github_blueprint,url_prefix="/login")
