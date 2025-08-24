@@ -39,7 +39,7 @@ def logout():
 def githubLogin():
     try:
         if not github.authorized:
-            return jsonify({'status':False,'Message':'Git hub is not authorized'})
+            return redirect(url_for("github.login"))
         user_info=github.get("/user")
         if user_info.ok:
             user_info_json=user_info.json()
