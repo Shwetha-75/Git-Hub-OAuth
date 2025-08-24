@@ -1,6 +1,7 @@
 from flask import Blueprint,render_template,session,redirect,jsonify,url_for
 from flask_dance.contrib.github import github
 from dotenv import load_dotenv
+import os
 load_dotenv()
 
 route=Blueprint('route',__name__)
@@ -22,6 +23,13 @@ def login():
         return f"<h1>Your Github User name {username}</h1><a href='/logout'>Logout</a>"
     else:
         return "<h1>Failed to fetch user info from Github.</h1><a href='/logout'>Logout</a>"
+@route.before_request
+def enforce_https():
+    if os.getenv("RENDER") == "true":
+        from flask import request
+        if request.headers.get("X-Forwarded-Proto", "http") == "http":
+            return redirect(request.url.replace("http://", "https://"))
+
 @route.route("/logout")
 def logout():
     session.pop('github_oauth_token',None)
