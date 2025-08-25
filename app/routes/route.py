@@ -8,21 +8,22 @@ route=Blueprint('route',__name__)
 
 
 
-@route.route("/")
-def index():
-    return render_template("index.html")
-@route.route("/route-github",methods=["POST","GET"])
-def login():
-    if not github.authorized:
-        return redirect(url_for("github.login"))
-    account_info=github.get("/user")
-    if account_info.ok:
-        account_info_json=account_info.json()
-        print("Account Information : ",account_info_json)
-        username=account_info_json['login']
-        return f"<h1>Your Github User name {username}</h1><a href='/logout'>Logout</a>"
-    else:
-        return "<h1>Failed to fetch user info from Github.</h1><a href='/logout'>Logout</a>"
+# @route.route("/")
+# def index():
+#     return render_template("index.html")
+# @route.route("/route-github",methods=["POST","GET"])
+# def login():
+#     if not github.authorized:
+#         return redirect(url_for("github.login"))
+#     account_info=github.get("/user")
+#     if account_info.ok:
+#         account_info_json=account_info.json()
+#         print("Account Information : ",account_info_json)
+#         username=account_info_json['login']
+#         return f"<h1>Your Github User name {username}</h1><a href='/logout'>Logout</a>"
+#     else:
+#         return "<h1>Failed to fetch user info from Github.</h1><a href='/logout'>Logout</a>"
+
 # @route.before_request
 # def enforce_https():
 #     if os.getenv("RENDER") == "true":
