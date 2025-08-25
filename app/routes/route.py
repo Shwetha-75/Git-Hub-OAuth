@@ -36,6 +36,21 @@ def logout():
     session.pop('github_oauth_token',None)
     return render_template("index.html")
 
+@route.route("/",methods=['POST','GET'])
+def index():
+    try:
+        if github.authorized:
+            user_info=github.get("/user")
+            print("User Info : ",user_info)
+            if user_info.ok:
+                user_info_json=user_info.json()
+                print("User Info : ",user_info_json)
+                return jsonify({'status':True,'user_model':user_info_json})
+        return jsonify({'status':False})    
+    except Exception as exception:
+           print("Error message ",exception)
+           return jsonify({'status':False})
+
 @route.route("/github-login",methods=['POST','GET'])
 def githubLogin():
     try:
